@@ -12,6 +12,7 @@ import requests
 from influxdb import InfluxDBClient
 from influxdb_client import InfluxDBClient as InfluxDB2Client
 from influxdb_client.client.write_api import SYNCHRONOUS
+from jinja2 import Template
 
 
 data_mapping = {
@@ -144,20 +145,33 @@ def insert_data_into_influx2(current_values):
   write_api.write(bucket, org, data)
 
 
+def generate_schema():
+  template = None
+
+  with open('init.sql.j2', 'r') as f:
+    template = Template(f.read())
+
+  with open('init.sql', 'w') as f:
+    f.write(template.render(columns=data_mapping))
+
+
 def main():
   parser = argparse.ArgumentParser(description='Kostal Dataexporter')
   parser.add_argument('--postgres', type=int, default=0, choices=[0, 1])
   parser.add_argument('--influx', type=int, default=0, choices=[0, 1])
   parser.add_argument('--influx2', type=int, default=1, choices=[0, 1])
   parser.add_argument('--interval', type=int, default=30, help="Scrape interval")
+  parser.add_argument('--generate-schema', action="store_true", help="Scrape interval")
   args = parser.parse_args()
+
+  if args.generate_schema:
+    generate_schema()
+    exit(0)
 
   try:
     while True:
       print('Process values on {}'.format(time.asctime()))
       current_values = get_data()
-
-      pprint(current_values)
 
       if args.postgres == 1:
         insert_data_into_postgres(current_values)

@@ -1,0 +1,27 @@
+CREATE DATABASE kostal;
+
+-- Table: public.pvwr
+
+-- DROP TABLE public.pvwr;
+
+CREATE TABLE public.pvwr
+(
+    id bigint NOT NULL DEFAULT nextval('pvwr_id_seq'::regclass),
+    "timestamp" timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    {% for column in columns -%}
+    {{ column }} numeric NOT NULL,
+    {% endfor -%}
+    CONSTRAINT pvwr_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.pvwr
+    OWNER to postgres;
+
+GRANT SELECT ON TABLE public.pvwr TO grafanareader;
+
+GRANT ALL ON TABLE public.pvwr TO postgres;
+
