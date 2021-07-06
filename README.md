@@ -12,6 +12,7 @@ and exports the data either to PostgreSQL Database, InfluxDB v1 or InfluxDB v2).
   * `KOSTAL_USERNAME`
   * `KOSTAL_PASSWORD`
   * `KOSTAL_HOST`
+  * `KOSTAL_PIKO_MODEL` (optional, overrides `--piko-model`)
   * For PostgreSQL:
     * `DB_HOST`
     * `DB_PORT`
@@ -33,6 +34,7 @@ and exports the data either to PostgreSQL Database, InfluxDB v1 or InfluxDB v2).
     * `--influx 1` (on, optional) or `--influx 0` (off, optional)
     * `--influx2 1` (on, default) or `--influx 0` (off, optional)
     * `--postgres 1` (on, optional) or `--postgres 0` (off, default)
+    * `--piko-model {7,15}` Set PIKO model. Sets which metrics to scrape (optional, default: `7`)
 
 There's also a Docker Image available on [Docker Hub](https://hub.docker.com/r/svijee/kostal-dataexporter).
 
@@ -50,3 +52,8 @@ to use it in your Grafana instance.
 
 This is just a quick-and-dirty script to grab to content of the REST-API of my
 Kostal Piko 7.0 Inverter. This might be usable on other Inverters aswell.
+
+The difference between supplying 7 vs 15 to `--piko-model` is that 15 adds
+metrics for two additional dc input as well as two metrics that were not used in
+the original exporter script. The two previously unused metrics are disabled by
+default for backwards compatability.

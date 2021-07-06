@@ -15,15 +15,11 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 from jinja2 import Template
 
 
-data_mapping = {
+data_mapping_base = {
   'pv_generator_dc_input_1_voltage': 33555202,
   'pv_generator_dc_input_1_current': 33555201,
   'pv_generator_dc_input_1_power': 33555203,
-  #'pv_generator_dc_input_2_voltage': 33555458,
-  #'pv_generator_dc_input_2_current': 33555457,
-  #'pv_generator_dc_input_2_power': 33555459,
   'house_home_consumption_covered_by_solar_generator': 83886336,
-  #'house_home_consumption_covered_by_battery': 83886592,
   'house_home_consumption_covered_by_grid': 83886848,
   'house_phase_selective_home_consumption_phase_1': 83887106,
   'house_phase_selective_home_consumption_phase_2': 83887362,
@@ -31,7 +27,6 @@ data_mapping = {
   'grid_grid_parameters_output_power': 67109120,
   'grid_grid_parameters_grid_frequency': 67110400,
   'grid_grid_parameters_cos': 67110656,
-  #'grid_grid_parameters_limitation_on': 67110144,
   'grid_phase_1_voltage': 67109378,
   'grid_phase_1_current': 67109377,
   'grid_phase_1_power': 67109379,
@@ -54,12 +49,26 @@ data_mapping = {
   'stats_day_degree_of_self_sufficiency': 251659279,
 }
 
+data_mapping_misc = {
+  'house_home_consumption_covered_by_battery': 83886592,
+  'grid_grid_parameters_limitation_on': 67110144,
+}
+
+data_mapping_piko_15 = {
+  'pv_generator_dc_input_2_voltage': 33555458,
+  'pv_generator_dc_input_2_current': 33555457,
+  'pv_generator_dc_input_2_power': 33555459,
+  'pv_generator_dc_input_3_voltage': 33555714,
+  'pv_generator_dc_input_3_current': 33555713,
+  'pv_generator_dc_input_3_power': 33555715,
+}
+
 
 def get_key_by_value(dict_object, search_value):
   return next(key for key, value in dict_object.items() if value == search_value)
 
 
-def get_data():
+def get_data(data_mapping):
   url = 'http://{}/api/dxs.json'.format(os.environ.get('KOSTAL_HOST'))
   auth = (os.environ.get('KOSTAL_USERNAME'), os.environ.get('KOSTAL_PASSWORD'))
 
@@ -145,7 +154,7 @@ def insert_data_into_influx2(current_values):
   write_api.write(bucket, org, data)
 
 
-def generate_schema():
+def generate_schema(data_mapping):
   template = None
 
   with open('init.sql.j2', 'r') as f:
@@ -155,8 +164,19 @@ def generate_schema():
     f.write(template.render(columns=data_mapping))
 
 
+def get_data_mapping(piko_model):
+  """Based on what model to scrape, the different fiels may be different"""
+  data_mapping = data_mapping_base
+
+  if piko_model == 15:
+    data_mapping = {**data_mapping, **data_mapping_piko_15, **data_mapping_misc}
+
+  return data_mapping
+
+
 def main():
   parser = argparse.ArgumentParser(description='Kostal Dataexporter')
+  parser.add_argument('--piko-model', type=int, default=7, choices=[7, 15], help="Kostal Piko model")
   parser.add_argument('--postgres', type=int, default=0, choices=[0, 1])
   parser.add_argument('--influx', type=int, default=0, choices=[0, 1])
   parser.add_argument('--influx2', type=int, default=1, choices=[0, 1])
@@ -164,14 +184,17 @@ def main():
   parser.add_argument('--generate-schema', action="store_true", help="Scrape interval")
   args = parser.parse_args()
 
+  piko_model = os.environ.get("KOSTAL_PIKO_MODEL") or args.piko_model
+  data_mapping = get_data_mapping(piko_model)
+
   if args.generate_schema:
-    generate_schema()
+    generate_schema(data_mapping)
     exit(0)
 
   try:
     while True:
       print('Process values on {}'.format(time.asctime()))
-      current_values = get_data()
+      current_values = get_data(data_mapping)
 
       if args.postgres == 1:
         insert_data_into_postgres(current_values)
