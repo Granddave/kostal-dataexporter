@@ -10,41 +10,41 @@ a web browser and the inverter for e.g. `$HOST/#/current-values/pv-generator`
 ## Setup
 
  * PostgreSQL:
-  * Generate the database schema with `python kostal-piko-dataexport.py --generate-schema [--piko-model MODEL]`
-  * Import the generated `postgres/init.sql` into your database
-  * Optional: Run PostgreSQL server via docker-compose
-    * Create an `postgres/.env` with the postgres environment variables below
-    * Run with `docker-compose -f postgres/postgres.yaml`
+   * Generate the database schema with `python kostal-piko-dataexport.py --generate-schema [--piko-model MODEL]`
+   * Import the generated `postgres/init.sql` into your database
+   * Optional: Run PostgreSQL server via docker-compose
+     * Create an `postgres/.env` with the postgres environment variables below
+     * Run with `docker-compose -f postgres/postgres.yaml`
  * InfluxDB: Create Database (eg `pv`)
  * Set environment variables with the relevant details
-  * `KOSTAL_USERNAME`
-  * `KOSTAL_PASSWORD`
-  * `KOSTAL_HOST`
-  * `KOSTAL_PIKO_MODEL` (optional, overrides `--piko-model`)
-  * For PostgreSQL:
-    * `POSTGRES_HOST`
-    * `POSTGRES_PORT`
-    * `POSTGRES_NAME`
-    * `POSTGRES_USER`
-    * `POSTGRES_PASSWORD`
-  * For InfluxDB (1.x):
-    * `INFLUXDB_HOST`
-    * `INFLUXDB_PORT`
-    * `INFLUXDB_NAME`
-    * `INFLUXDB_USER`
-    * `INFLUXDB_PASSWORD`
-  * For InfluxDB (2.x):
-    * `INFLUXDB_ORG`
-    * `INFLUXDB_BUCKET`
-    * `INFLUXDB_URL`
-    * `INFLUXDB_TOKEN`
+   * `KOSTAL_USERNAME`
+   * `KOSTAL_PASSWORD`
+   * `KOSTAL_HOST`
+   * `KOSTAL_PIKO_MODEL` (optional, overrides `--piko-model`)
+   * For PostgreSQL:
+     * `POSTGRES_HOST`
+     * `POSTGRES_PORT`
+     * `POSTGRES_NAME`
+     * `POSTGRES_USER`
+     * `POSTGRES_PASSWORD`
+   * For InfluxDB (1.x):
+     * `INFLUXDB_HOST`
+     * `INFLUXDB_PORT`
+     * `INFLUXDB_NAME`
+     * `INFLUXDB_USER`
+     * `INFLUXDB_PASSWORD`
+   * For InfluxDB (2.x):
+     * `INFLUXDB_ORG`
+     * `INFLUXDB_BUCKET`
+     * `INFLUXDB_URL`
+     * `INFLUXDB_TOKEN`
  * Run `python kostal-piko-dataexport.py`
-    * `--influx {0,1}` Export to InfluxDB v1 (optional, default: `0`)
-    * `--influx2 {0,1}` Export to InfluxDB v2 (optional, default: `1`)
-    * `--postgres {0,1}` Export to PostgreSQL (optional, default: `0`)
-    * `--generate-schema` Generate PostgreSQL schema and exit
-    * `--piko-model {7,15}` Set PIKO model. Sets which metrics to scrape (optional, default: `7`)
-    * `--oneshot` Scrape data, print to stdout and exit
+   * `--influx {0,1}` Export to InfluxDB v1 (optional, default: `0`)
+   * `--influx2 {0,1}` Export to InfluxDB v2 (optional, default: `1`)
+   * `--postgres {0,1}` Export to PostgreSQL (optional, default: `0`)
+   * `--generate-schema` Generate PostgreSQL schema and exit
+   * `--piko-model {7,15}` Set PIKO model. Sets which metrics to scrape (optional, default: `7`)
+   * `--oneshot` Scrape data, print to stdout and exit
 
 There's also a Docker Image available on [Docker Hub](https://hub.docker.com/r/svijee/kostal-dataexporter).
 
