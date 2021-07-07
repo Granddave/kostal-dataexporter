@@ -18,9 +18,9 @@ WITH (
 TABLESPACE pg_default;
 
 ALTER TABLE public.pvwr
-    OWNER to postgres;
+    OWNER to inserter;
 
 GRANT SELECT ON TABLE public.pvwr TO grafanareader;
 
-GRANT ALL ON TABLE public.pvwr TO postgres;
+GRANT ALL ON TABLE public.pvwr TO inserter;
 
