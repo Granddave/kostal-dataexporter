@@ -19,11 +19,11 @@ a web browser and the inverter for e.g. `$HOST/#/current-values/pv-generator`
   * `KOSTAL_HOST`
   * `KOSTAL_PIKO_MODEL` (optional, overrides `--piko-model`)
   * For PostgreSQL:
-    * `DB_HOST`
-    * `DB_PORT`
-    * `DB_NAME`
-    * `DB_USER`
-    * `DB_PASSWORD`
+    * `POSTGRES_HOST`
+    * `POSTGRES_PORT`
+    * `POSTGRES_NAME`
+    * `POSTGRES_USER`
+    * `POSTGRES_PASSWORD`
   * For InfluxDB (1.x):
     * `INFLUXDB_HOST`
     * `INFLUXDB_PORT`

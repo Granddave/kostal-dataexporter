@@ -100,11 +100,11 @@ def get_data(data_mapping):
 
 def insert_data_into_postgres(current_values):
   params = {
-    "host": os.environ.get('DB_HOST'),
-    "port": os.environ.get('DB_PORT'),
-    "database": os.environ.get('DB_NAME'),
-    "user": os.environ.get('DB_USER'),
-    "password": os.environ.get('DB_PASSWORD'),
+    "host": os.environ.get('POSTGRES_HOST'),
+    "port": os.environ.get('POSTGRES_PORT'),
+    "database": os.environ.get('POSTGRES_NAME'),
+    "user": os.environ.get('POSTGRES_USER'),
+    "password": os.environ.get('POSTGRES_PASSWORD'),
   }
 
   conn = psycopg2.connect(**params)
