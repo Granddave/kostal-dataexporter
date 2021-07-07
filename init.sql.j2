@@ -1,9 +1,8 @@
-CREATE DATABASE kostal;
+-- CREATE DATABASE kostal;
 
--- Table: public.pvwr
-
--- DROP TABLE public.pvwr;
-
+DROP TABLE IF EXISTS public.pvwr;
+DROP SEQUENCE IF EXISTS pvwr_id_seq;
+CREATE SEQUENCE pvwr_id_seq;
 CREATE TABLE public.pvwr
 (
     id bigint NOT NULL DEFAULT nextval('pvwr_id_seq'::regclass),
