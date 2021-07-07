@@ -12,6 +12,9 @@ a web browser and the inverter for e.g. `$HOST/#/current-values/pv-generator`
  * PostgreSQL:
   * Generate the database schema with `python kostal-piko-dataexport.py --generate-schema [--piko-model MODEL]`
   * Import the generated `postgres/init.sql` into your database
+  * Optional: Run PostgreSQL server via docker-compose
+    * Create an `postgres/.env` with the postgres environment variables below
+    * Run with `docker-compose -f postgres/postgres.yaml`
  * InfluxDB: Create Database (eg `pv`)
  * Set environment variables with the relevant details
   * `KOSTAL_USERNAME`
