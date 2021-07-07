@@ -162,7 +162,7 @@ def generate_schema(data_mapping):
     template = Template(f.read())
 
   with open('init.sql', 'w') as f:
-    f.write(template.render(columns=data_mapping))
+    f.write(template.render(columns=data_mapping.keys()))
 
 
 def get_data_mapping(piko_model):

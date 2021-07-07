@@ -7,7 +7,7 @@ CREATE TABLE public.pvwr
 (
     id bigint NOT NULL DEFAULT nextval('pvwr_id_seq'::regclass),
     "timestamp" timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    {% for column in columns -%}
+    {% for column in columns|sort -%}
     {{ column }} numeric NOT NULL,
     {% endfor -%}
     CONSTRAINT pvwr_pkey PRIMARY KEY (id)
