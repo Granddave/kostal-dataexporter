@@ -6,7 +6,9 @@ and exports the data either to PostgreSQL Database, InfluxDB v1 or InfluxDB v2).
 
 ## Setup
 
- * PostgreSQL: Import the `init.sql` into your Database
+ * PostgreSQL:
+  * Generate the database schema with `python kostal-piko-dataexport.py --generate-schema [--piko-model MODEL]`
+  * Import the `init.sql` into your database
  * InfluxDB: Create Database (eg `pv`)
  * Set environment variables with the relevant details
   * `KOSTAL_USERNAME`
@@ -31,9 +33,10 @@ and exports the data either to PostgreSQL Database, InfluxDB v1 or InfluxDB v2).
     * `INFLUXDB_URL`
     * `INFLUXDB_TOKEN`
  * Run `python kostal-piko-dataexport.py`
-    * `--influx 1` (on, optional) or `--influx 0` (off, optional)
-    * `--influx2 1` (on, default) or `--influx 0` (off, optional)
-    * `--postgres 1` (on, optional) or `--postgres 0` (off, default)
+    * `--influx {0,1}` Export to InfluxDB v1 (optional, default: `0`)
+    * `--influx2 {0,1}` Export to InfluxDB v2 (optional, default: `1`)
+    * `--postgres {0,1}` Export to PostgreSQL (optional, default: `0`)
+    * `--generate-schema` Generate PostgreSQL schema and exit
     * `--piko-model {7,15}` Set PIKO model. Sets which metrics to scrape (optional, default: `7`)
     * `--oneshot` Scrape data, print to stdout and exit
 
