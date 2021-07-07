@@ -4,6 +4,9 @@ This Python scripts grabs content of the REST API of a [Kostal PIKO inverter](
 https://www.kostal-solar-electric.com/en-gb/products/solar-inverter/piko-12-20)
 and exports the data either to PostgreSQL Database, InfluxDB v1 or InfluxDB v2.
 
+The API is undocumented and can be discovered by watching the network traffic between
+a web browser and the inverter for e.g. `$HOST/#/current-values/pv-generator`
+
 ## Setup
 
  * PostgreSQL: Import the `init.sql` into your Database
