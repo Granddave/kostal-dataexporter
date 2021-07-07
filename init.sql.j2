@@ -20,7 +20,9 @@ TABLESPACE pg_default;
 ALTER TABLE public.pvwr
     OWNER to inserter;
 
-GRANT SELECT ON TABLE public.pvwr TO grafanareader;
+DROP ROLE IF EXISTS reader;
+CREATE ROLE reader LOGIN;
+GRANT SELECT ON TABLE public.pvwr TO reader;
 
 GRANT ALL ON TABLE public.pvwr TO inserter;
 
