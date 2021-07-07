@@ -6,6 +6,7 @@ import os
 import time
 import math
 from datetime import datetime
+from pprint import pprint
 
 import psycopg2
 import requests
@@ -182,6 +183,7 @@ def main():
   parser.add_argument('--influx2', type=int, default=1, choices=[0, 1])
   parser.add_argument('--interval', type=int, default=30, help="Scrape interval")
   parser.add_argument('--generate-schema', action="store_true", help="Scrape interval")
+  parser.add_argument('--oneshot', action="store_true", help="Scrape once and print results")
   args = parser.parse_args()
 
   piko_model = os.environ.get("KOSTAL_PIKO_MODEL") or args.piko_model
@@ -189,6 +191,10 @@ def main():
 
   if args.generate_schema:
     generate_schema(data_mapping)
+    exit(0)
+
+  if args.oneshot:
+    pprint(get_data(data_mapping))
     exit(0)
 
   try:
