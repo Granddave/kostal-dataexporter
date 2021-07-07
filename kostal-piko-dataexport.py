@@ -158,10 +158,13 @@ def insert_data_into_influx2(current_values):
 def generate_schema(data_mapping):
   template = None
 
-  with open('init.sql.j2', 'r') as f:
+  dir_path = os.path.dirname(os.path.realpath(__file__))
+  sql_path = os.path.join(dir_path, 'postgres')
+
+  with open(os.path.join(sql_path, 'init.sql.j2'), 'r') as f:
     template = Template(f.read())
 
-  with open('init.sql', 'w') as f:
+  with open(os.path.join(sql_path, 'init.sql'), 'w') as f:
     f.write(template.render(columns=data_mapping.keys()))
 
 
