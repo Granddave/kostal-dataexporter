@@ -1,6 +1,6 @@
 # Kostal Piko Dataexporter
 
-This Python scripts grabs content of the REST API of a [Kostal PIKO inverter](
+This Python script grabs content of the REST API of a [Kostal PIKO inverter](
 https://www.kostal-solar-electric.com/en-gb/products/solar-inverter/piko-12-20)
 and exports the data either to PostgreSQL Database, InfluxDB v1 or InfluxDB v2.
 
@@ -9,9 +9,9 @@ a web browser and the inverter for e.g. `$HOST/#/current-values/pv-generator`
 
 ## Setup
 
- * PostgreSQL: Import the `init.sql` into your Database
- * InfluxDB: Create Database (eg `pv`)
- * Set environment variables with the relevant details
+* PostgreSQL: Import the `init.sql` into your Database
+* InfluxDB: Create Database (eg `pv`)
+* Set environment variables with the relevant details
   * `KOSTAL_USERNAME`
   * `KOSTAL_PASSWORD`
   * `KOSTAL_HOST`
@@ -32,10 +32,10 @@ a web browser and the inverter for e.g. `$HOST/#/current-values/pv-generator`
     * `INFLUXDB_BUCKET`
     * `INFLUXDB_URL`
     * `INFLUXDB_TOKEN`
- * Run `python kostal-piko-dataexport.py`
-    * `--influx 1` (on, optional) or `--influx 0` (off, optional)
-    * `--influx2 1` (on, default) or `--influx 0` (off, optional)
-    * `--postgres 1` (on, optional) or `--postgres 0` (off, default)
+  * Run `python kostal-piko-dataexport.py`
+    * `--influx {0,1}` Export to InfluxDB v1 (optional, default: `0`)
+    * `--influx2 {0,1}` Export to InfluxDB v2 (optional, default: `1`)
+    * `--postgres {0,1}` Export to PostgreSQL (optional, default: `0`)
     * `--interval {seconds}` Scrape interval (default: 30)
     * `--oneshot` Scrape data, print to stdout and exit
 
