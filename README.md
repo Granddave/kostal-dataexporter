@@ -53,6 +53,19 @@ PostgreSQL, [dashboard-influx.json](dashboard-influx.json) for influxdb v1 or
 [dashboard-influxdb2.json](dashboard-influxdb2.json) to use it in your Grafana
 instance.
 
+## Data import
+
+Data from the log file exported via the Kostal web interface can be imported
+with the `data-importer.py` script. This can be useful for the initial setup.
+
+Set the environment variables for InfluxDB2 specified in the setup section above
+and pass the downloaded log file like so `./data-importer.py ~/Downloads/LogData.dat`
+
+### Caveats
+
+* Only InfluxDB2 is currently supported
+* The sample interval and metric count is quite low
+
 ## A note on compatability
 
 This is just a quick-and-dirty script to grab to content of the REST-API
