@@ -53,7 +53,14 @@ PostgreSQL, [dashboard-influx.json](dashboard-influx.json) for influxdb v1 or
 [dashboard-influxdb2.json](dashboard-influxdb2.json) to use it in your Grafana
 instance.
 
-## Note
+## A note on compatability
 
-This is just a quick-and-dirty script to grab to content of the REST-API of my
-Kostal Piko 7.0 Inverter. This might be usable on other Inverters aswell.
+This is just a quick-and-dirty script to grab to content of the REST-API
+served by the Kostal Piko inverter.
+
+Tested inverters:
+
+* Kostal Piko 7
+* Kostal Piko 15
+
+Might work on other models as well.
